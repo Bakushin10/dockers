@@ -1,0 +1,27 @@
+version: '3'
+
+services: 
+    web:
+        build: ./DDGN
+        # command: django-admin startproject DDGN .
+        #command: python manage.py runserver 0.0.0.0:8000
+        command: gunicorn -c gunicorn.conf DDGN.wsgi
+        volumes: 
+            - ./DDGN:/DDGN
+        ports: 
+            - "8000:8000"
+    
+    nginx:
+        build: ./nginx
+        depends_on: 
+            - web
+        command: nginx -g 'deamon off;'
+        ports: 
+            - "80:80"
+        volumes: 
+            - ./DDGN/static:/var/www/static
+            - ./DDGN/media:/var/www/media
+
+volumes: 
+    db_data:
+        external: true
