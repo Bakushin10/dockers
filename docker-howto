@@ -1,0 +1,16 @@
+docker-composer : create the instruction to manage containers.
+
+if image name is not specified in the docker-composer.yml, then docker will create the default
+image name of projectname_servicename
+
+https://amaya382.hatenablog.jp/entry/2017/04/03/034002
+
+
+docker-composer up :
+ if there is no image is found
+ - 1. create the image
+ - 2. create the container from the image 
+ - start the container of the image specified in the docker-composer.yml
+ 
+ if there is a container, 
+ - start the container of the image specified in the docker-composer.yml
