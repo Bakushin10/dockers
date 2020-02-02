@@ -6,6 +6,7 @@ services:
         # command: django-admin startproject DDGN .
         #command: python manage.py runserver 0.0.0.0:8000
         command: gunicorn -c gunicorn.conf DDGN.wsgi
+        image: django_app_python
         volumes: 
             - ./DDGN:/DDGN
         ports: 
@@ -16,6 +17,7 @@ services:
         depends_on: 
             - web
         command: nginx -g 'deamon off;'
+        image: django_app_nginx
         ports: 
             - "80:80"
         volumes: 
