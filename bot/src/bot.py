@@ -2,13 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from time import sleep
 from secrets import username, password
+
 
 """
     install chromeDriver https://chromedriver.chromium.org/downloads 
     'mv chromedriver_linux64/chromedriver /usr/local/bin'
 
+    bot = Bot()
 """
 
 class Bot():
@@ -75,3 +78,19 @@ class Bot():
     def close_match(self):
         match_popup = self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
         match_popup.click()
+
+if __name__== "__main__":
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--window-size=1420,1080')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver.get('www.google.com')
+    
+    bot = Bot()
+    bot.login()
+    bot.auto_swipe()
+
+    # return webdriver.Chrome(chrome_options=options)
+

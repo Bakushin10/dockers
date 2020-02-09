@@ -1,0 +1,13 @@
+version: '3'
+
+services: 
+    web:
+        build: ./src
+        command: python bot.py
+        image: bot
+        volumes:
+            - ./src:/src
+
+volumes: 
+    db_data:
+        external: true
