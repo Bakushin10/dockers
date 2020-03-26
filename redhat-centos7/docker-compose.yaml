@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  lynx-redhat:
+    build: .
+    command: python3 -v
+    image : lynx-redhat
+    volumes:
+      - .:/app
