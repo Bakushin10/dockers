@@ -34,19 +34,18 @@ RUN wget https://www.python.org/ftp/python/3.7.2/Python-3.7.2.tgz && \
     cd Python-3.7.2/
 RUN  ./Python-3.7.2/configure --enable-optimizations
 RUN  make altinstall && \
-    rm -f /root/Python-3.7.0.tgz && \
-    python3.7 -V
+    rm -f /root/Python-3.7.0.tgz
 
 
 # # set python3.7 as default
-# RUN alternatives --install /usr/bin/python python /usr/bin/python2 50
-# RUN alternatives --install /usr/bin/python python /usr/bin/python3.7 70
-# RUN alternatives --set python /usr/bin/python3.7
+RUN alternatives --install /usr/bin/python python /usr/bin/python2 50
+RUN alternatives --install /usr/bin/python python /usr/bin/python3.7 70
+RUN alternatives --set python /usr/bin/python3.7
 
 # # symlink pip
-# RUN ln -s /usr/bin/python3/bin/pip3.7 /usr/bin/pip
-# RUN pip install --upgrade pip pipenv setuptools wheel
-# RUN ln -s /usr/bin/python3/bin/pipenv /usr/bin/pipenv
+RUN ln -s /usr/bin/python3/bin/pip3.7 /usr/bin/pip
+RUN pip3 install --upgrade pip pipenv setuptools wheel
+RUN ln -s /usr/bin/python3/bin/pipenv /usr/bin/pipenv
 
 # set the locale
 RUN localedef --quiet -c -i en_US -f UTF-8 en_US.UTF-8
@@ -56,10 +55,11 @@ ENV LC_ALL en_US.UTF-8
 ENV PYTHONUNBUFFERED 1
 
 # copy the file to /app
-RUN mkdir /app
-WORKDIR /app
-COPY . /app/
+RUN mkdir /service
+WORKDIR /service
+COPY . /service/
 
 # install python dependency
 RUN pip3 install pipenv && \
-    pip3 install -r requirements.txt
+    pipenv sync
+    #pip3 install -r requirements.txt

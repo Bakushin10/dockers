@@ -1,9 +1,18 @@
 version: '3'
 
 services:
-  lynx-redhat:
-    build: .
-    command: python3 -v
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+  webs:
+    build: ./service
+    command: pipenv run start
     image : lynx-redhat
     volumes:
-      - .:/app
+      - ./service:/service
+    ports:
+        - "8000:8000"
+    depends_on:
+        - db
