@@ -84,15 +84,15 @@ class DataApi(APIView):
         style.use('ggplot')
         stock_info_adaptor = Stock_info_adaptor_class()
         data = stock_info_adaptor.adapt(request)
-
+        
         sql = data.get("sql")
         df = self.get_df(data)
-        df2 = data.get("csvFile")
         
+        df2 = data.get("csvFile")
         self.result = sqldf(sql, locals())
         print("*** after sql ***")
         print(self.result)
-
+        
         if request.data.get("saveCSV"):
             self.save_csv()
         

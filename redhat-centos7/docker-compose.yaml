@@ -23,7 +23,7 @@ services:
     container_name : django-web-api-centos
     command: pipenv run start
     volumes:
-      - ./service:/service
+      - ./service:/src/service
     ports:
         - "8000"
     depends_on:

@@ -20,7 +20,11 @@ RUN yum install -y \
     yum install -y \
         libffi-devel \
         libxml2-devel \
-        libxslt-devel
+        libxslt-devel \
+        sqlite-devel \
+        libsqlite3-dev
+
+#RUN ./configure --enable-loadable-sqlite-extensions && make && sudo make install
 
 RUN yum clean -y all
 
@@ -54,10 +58,12 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV PYTHONUNBUFFERED 1
 
-# copy the file to /app
-RUN mkdir /service
-WORKDIR /service
-COPY . /service/
+# copy the file to src/service
+RUN mkdir /src
+WORKDIR /src
+RUN mkdir service
+WORKDIR service
+COPY . /src/service/
 
 # install python dependency
 RUN pip3 install pipenv && \
