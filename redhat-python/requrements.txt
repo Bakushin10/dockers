@@ -1,0 +1,4 @@
+pip==20.2.2
+nltk==3.3
+numpy==1.15.3
+requests==2.20.0
