@@ -2,7 +2,8 @@ version: '3'
 
 services:
   web:
-    build: .
+    build:
+      context: ./src
     image : python-web-centos
     container_name : python-web-api-centos
     volumes:
