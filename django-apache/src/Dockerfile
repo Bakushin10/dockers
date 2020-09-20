@@ -1,77 +1,29 @@
 #
 # docker run -t -d python-web-centos
-#
+# or
+# docker run -d python-centos sleep infinity
 
-FROM centos:7
+#FROM centos:7
+FROM centos/python-36-centos7
 
-RUN yum -y --enablerepo=extras install epel-release && yum clean all && yum -y update
-RUN yum install -y \
-	yum-utils \
+# default user was set to jboss in centOS 
+USER root
+RUN yum -y --enablerepo=extras install epel-release && \
+	yum clean all && \
+	yum -y update && \
+	yum install -y \
 	curl \
-	rlwrap \
-	screen \
 	vim \
-	gcc \
 	nano \
-	wget \
 	openssl-devel \
-	bzip2-devel \
-	emacs-nox && \
-	yum install -y \
-	epel-release && \
-	yum groupinstall -y "Development Tools" && \
-	yum install -y \
-	libffi-devel \
-	libxml2-devel \
-	libxslt-devel
-
-# install apache
-RUN yum install httpd -y
-
-
-############################
-#####   install python #####
-############################
-# install nodejs version 10 anb python 3.7.2
-RUN mkdir /python
-WORKDIR /python
-
-# instll node version 10
-RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
-	yum install -y nodejs
-
-# install python 3.7.2
-RUN wget https://www.python.org/ftp/python/3.7.2/Python-3.7.2.tgz && \
-	tar xzf Python-3.7.2.tgz && \
-	cd Python-3.7.2/
-RUN  ./Python-3.7.2/configure --enable-optimizations
-RUN  make altinstall && \
-	rm -f /root/Python-3.7.0.tgz
-
-
-# # set python3.7 as default
-RUN alternatives --install /usr/bin/python python /usr/bin/python2 50
-RUN alternatives --install /usr/bin/python python /usr/bin/python3.7 70
-RUN alternatives --set python /usr/bin/python3.7
-
-# # symlink pip
-RUN ln -s /usr/bin/python3/bin/pip3.7 /usr/bin/pip
-RUN pip3 install --upgrade pip pipenv setuptools wheel
-RUN ln -s /usr/bin/python3/bin/pipenv /usr/bin/pipenv
-
-# set the locale
-RUN localedef --quiet -c -i en_US -f UTF-8 en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-ENV PYTHONUNBUFFERED 1
+	# apache 
+	httpd
 
 ###
 ### COPY source file
 ###
 WORKDIR /
 RUN mkdir src
-WORKDIR /src
-COPY . .
+COPY . src/
 
 #CMD [ "executable" ]

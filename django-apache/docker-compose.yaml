@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: ./src
-    image : python-web-centos
+    image : python-centos
     container_name : python-web-api-centos
     volumes:
       - ./requrements.txt:/src/requrements.txt
