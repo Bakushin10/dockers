@@ -1,11 +1,8 @@
 # docker run -t -d django-apache
 # or
-# docker run -d python-centos sleep infinity
+# docker run -d python-centos sleep infinity for centOS
 # /src/data_tracker/wsgi.py
 #
-# https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
-#
-
 FROM python:3.6
 
 RUN apt-get update && apt-get install -y \
@@ -15,19 +12,17 @@ RUN apt-get update && apt-get install -y \
 	apache2 \
 	apache2-utils \
 	apache2-dev \
-	libapache2-mod-wsgi-py3
+	libapache2-mod-wsgi-py3 \
+	net-tools
 
-#ADD site_config.conf /etc/apache2/sites-available/000-default.conf
-
-ENV PYTHONUNBUFFERED 1
-
+#ENV PYTHONUNBUFFERED 1
 RUN pip install \
 	virtualenv \
-	mod-wsgi \
-	pipenv
+	mod-wsgi
 
 ###
-### create/activate venv, copy source file and install dependencies
+### create venv, copy source file and install dependencies from requirements.txt
+### https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
 ###
 WORKDIR /
 ENV VIRTUAL_ENV=/src/venv/django-app
@@ -39,5 +34,13 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 WORKDIR /src/venv/django-app/app
 RUN pip install -r requirements.txt
+
+
+#
+# apache setup
+# 
+ADD django-apache.conf /etc/apache2/sites-available/django-apache.conf
+WORKDIR /etc/apache2/sites-available
+RUN a2ensite django-apache.conf
 
 #CMD [ "apache2ctl", "-D", "FOREGROUND" ]
