@@ -8,6 +8,8 @@ services:
     container_name : python-api
     command: service apache2 restart
     volumes:
-      - site_config.conf /etc/apache2/sites-available/000-default.conf
+      - ./src /src/venv/django-app/app
+      #- ./src/django-apache.conf /etc/apache2/sites-available/django-apache.conf
+      
     ports:
         - "8000:80" # map apache port 80 to 8000
