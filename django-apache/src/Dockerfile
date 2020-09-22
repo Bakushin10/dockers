@@ -1,29 +1,43 @@
-#
-# docker run -t -d python-web-centos
+# docker run -t -d django-apache
 # or
 # docker run -d python-centos sleep infinity
+# /src/data_tracker/wsgi.py
+#
+# https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
+#
 
-#FROM centos:7
-FROM centos/python-36-centos7
+FROM python:3.6
 
-# default user was set to jboss in centOS 
-USER root
-RUN yum -y --enablerepo=extras install epel-release && \
-	yum clean all && \
-	yum -y update && \
-	yum install -y \
-	curl \
-	vim \
+RUN apt-get update && apt-get install -y \
 	nano \
-	openssl-devel \
-	# apache 
-	httpd
+	vim \
+	curl \
+	apache2 \
+	apache2-utils \
+	apache2-dev \
+	libapache2-mod-wsgi-py3
+
+#ADD site_config.conf /etc/apache2/sites-available/000-default.conf
+
+ENV PYTHONUNBUFFERED 1
+
+RUN pip install \
+	virtualenv \
+	mod-wsgi \
+	pipenv
 
 ###
-### COPY source file
+### create/activate venv, copy source file and install dependencies
 ###
 WORKDIR /
-RUN mkdir src
-COPY . src/
+ENV VIRTUAL_ENV=/src/venv/django-app
+RUN mkdir src && mkdir src/venv && \
+	python3 -m venv $VIRTUAL_ENV && \
+	mkdir src/venv/django-app/app
+COPY . /src/venv/django-app/app
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-#CMD [ "executable" ]
+WORKDIR /src/venv/django-app/app
+RUN pip install -r requirements.txt
+
+#CMD [ "apache2ctl", "-D", "FOREGROUND" ]

@@ -4,9 +4,10 @@ services:
   web:
     build:
       context: ./src
-    image : python-centos
-    container_name : python-web-api-centos
+    image : django-apache
+    container_name : python-api
+    command: service apache2 restart
     volumes:
-      - ./requrements.txt:/src/requrements.txt
+      - site_config.conf /etc/apache2/sites-available/000-default.conf
     ports:
-        - "8000"
+        - "8000:80" # map apache port 80 to 8000
