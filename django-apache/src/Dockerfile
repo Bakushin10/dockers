@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
 	libapache2-mod-wsgi-py3 \
 	net-tools
 
-#ENV PYTHONUNBUFFERED 1
 RUN pip install \
 	virtualenv \
 	mod-wsgi
