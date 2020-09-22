@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    build: ./src
+    image : java-web-centos
+    container_name : java-web-api-centos
+    #command: pipenv run start
+    volumes:
+      - ./src:/src
+    ports:
+        - 8000:8000

@@ -24,6 +24,6 @@ services:
             - ./DDGN/static:/var/www/static
             - ./DDGN/media:/var/www/media
 
-volumes: 
-    db_data:
-        external: true
+# volumes: 
+#     db_data:
+#         external: true
