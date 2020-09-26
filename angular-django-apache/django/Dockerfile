@@ -12,11 +12,8 @@ RUN apt-get update && apt-get install -y \
 	libapache2-mod-wsgi-py3 \
 	nano
 
-#
-# COPY the file 
-#
 COPY . /django
 WORKDIR /django
 RUN pip install -r requirements.txt
 
-# CMD ["python", "manage.py", "runserver"]
+#CMD ["python", "manage.py", "runserver"]
