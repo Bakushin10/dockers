@@ -24,10 +24,15 @@ services:
 
   django-api:
     build:
-      context : ./django
+      context: ./django
     command: python manage.py runserver 0.0.0.0:8000
     container_name: ${PROJECT_NAME}-django
     ports:
       - '8000'
     volumes:
       - ./django:/django
+  
+  postgres:
+    build:
+      context: ./postgres
+    container_name: ${PROJECT_NAME}-postgres
