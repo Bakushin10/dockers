@@ -4,7 +4,7 @@ services:
   angular-apache2:
     build:
       context: ./angular
-    container_name: ${PROJECT_NAME}-angular
+    container_name: ${PROJECT_NAME}--angular
     ports:
       - '4200:80'
     volumes:
@@ -14,7 +14,7 @@ services:
   nginx-proxy:
     build:
       context: ./nginx
-    container_name: ${PROJECT_NAME}-nginx
+    container_name: ${PROJECT_NAME}--nginx
     ports:
       - 8000:8000
     # volumes:
@@ -26,7 +26,7 @@ services:
     build:
       context: ./django
     command: python manage.py runserver 0.0.0.0:8000
-    container_name: ${PROJECT_NAME}-django
+    container_name: ${PROJECT_NAME}--django
     ports:
       - '8000'
     volumes:
@@ -35,4 +35,4 @@ services:
   postgres:
     build:
       context: ./postgres
-    container_name: ${PROJECT_NAME}-postgres
+    container_name: ${PROJECT_NAME}--postgres
