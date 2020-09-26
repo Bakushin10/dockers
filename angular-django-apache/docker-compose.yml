@@ -1,12 +1,33 @@
 version: "2"
 
 services:
-  django-apache2:
-    build: .
-    container_name: angular
+  angular-apache2:
+    build:
+      context: ./angular
+    container_name: ${PROJECT_NAME}-angular
     ports:
-      - '8005:80'
+      - '4200:80'
     volumes:
-      - ./www:/var/www/html/django_demo_app
       - ./angular/dist/ng7:/var/www/html/dist
-      - ./demo_site.conf:/etc/apache2/sites-available/000-default.conf
+      - ./angular/000-default.conf:/etc/apache2/sites-available/000-default.conf
+
+  nginx-proxy:
+    build:
+      context: ./nginx
+    container_name: ${PROJECT_NAME}-nginx
+    ports:
+      - 8000:8000
+    # volumes:
+    #   - ./nginx/django.conf:/etc/nginx/conf.d
+    depends_on:
+      - django-api
+
+  django-api:
+    build:
+      context : ./django
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: ${PROJECT_NAME}-django
+    ports:
+      - '8000'
+    volumes:
+      - ./django:/django
