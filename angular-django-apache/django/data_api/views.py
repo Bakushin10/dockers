@@ -8,4 +8,4 @@ class DataApi(APIView):
         self.result = ""
 
     def get(self, request, **args):
-        return Response(data = "Hello")
+        return Response(data = "Hello, Django is working")

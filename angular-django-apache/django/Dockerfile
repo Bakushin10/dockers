@@ -3,6 +3,7 @@
 
 FROM python:3.7-slim
 ENV DEBIAN_FRONTEND=noninteractive
+ENV APP_HOME=/django
 RUN apt-get update && apt-get install -y \
 	# apt-utils \
 	# vim \
@@ -15,8 +16,8 @@ RUN apt-get update && apt-get install -y \
 	libapache2-mod-wsgi-py3 \
 	nano
 
-COPY . /django
-WORKDIR /django
+COPY . $APP_HOME
+WORKDIR $APP_HOME
 RUN pip install -r requirements.txt
 
-#CMD ["python", "manage.py", "runserver"]
+#ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
