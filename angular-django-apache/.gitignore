@@ -1,4 +1,4 @@
 angular/node_modules
-dist/
+django/data_tracker/__pycache__/settings.cpython-37.pyc
 .DS_Store
 ../.DS_Store

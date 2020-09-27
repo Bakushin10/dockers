@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
 	# curl \
 	# apache2 \
 	# apache2-utils \
+	libpq-dev \
+	python3-dev \
+	gcc \
 	libapache2-mod-wsgi-py3 \
 	nano
 
