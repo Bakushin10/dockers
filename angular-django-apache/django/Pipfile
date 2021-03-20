@@ -12,7 +12,7 @@ dj-database-url = { version = "==0.5.0", name = "pypi"}
 django = { version = "==2.2.6", name = "pypi"}
 django-cors-headers = { version = "==3.0.2", name = "pypi"}
 django-filter = { version = "==2.2.0", name = "pypi"}
-djangorestframework = { version = "==3.10.0", name = "pypi"}
+djangorestframework = { version = "==3.11.2", name = "pypi"}
 docutils = { version = "==0.14", name = "pypi"}
 gunicorn = { version = "==19.9.0", name = "pypi"}
 jmespath = { version = "==0.9.4", name = "pypi"}
