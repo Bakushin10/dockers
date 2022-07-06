@@ -23,5 +23,5 @@ pykakasi==1.2
 cx_Oracle==7.3.0
 pyOpenSSL==17.5.0
 zeep==3.4.0
-lxml==4.2.5
+lxml==4.9.1
 psycopg2-binary==2.8.5
